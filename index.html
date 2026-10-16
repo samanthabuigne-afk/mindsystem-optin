@@ -6,13 +6,14 @@
 <title>Mind System — Le système IA qui scale ton business</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://api.leadconnectorhq.com">
+<link rel="preconnect" href="https://link.msgsndr.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --violet:#811AFF; --violet-2:#A352FF; --ink:#15131d; --muted:#5b5668;
-    --line:#ece9f1; --bg:#ffffff;
+    --line:#ece9f1; --field:#f4f2f8;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
@@ -27,53 +28,55 @@
     min-height:100vh;
   }
   .wrap{max-width:1140px;margin:0 auto;padding:16px 18px 56px}
-  /* Header pill */
   .bar{
     display:flex;align-items:center;justify-content:space-between;gap:16px;
     background:var(--ink);color:#fff;border-radius:999px;
     padding:14px 24px;box-shadow:0 10px 30px rgba(21,19,29,.18);
   }
   .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;letter-spacing:.2px}
-  .brand .logo{
-    width:30px;height:30px;border-radius:8px;flex:0 0 auto;
-    background:#fff;display:flex;align-items:center;justify-content:center;
-  }
+  .brand .logo{width:30px;height:30px;border-radius:8px;flex:0 0 auto;background:#fff;display:flex;align-items:center;justify-content:center}
   .brand .logo svg{width:18px;height:18px}
   .bar .tag{font-weight:600;font-size:14.5px;color:#d8d4e4;text-align:right}
-  /* Layout */
-  .grid{
-    display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;
-    margin-top:34px;
-  }
-  .lead h1{
-    font-size:clamp(34px,6.2vw,58px);line-height:1.02;font-weight:800;margin:0 0 20px;
-    letter-spacing:-.5px;
-  }
+  .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;margin-top:34px}
+  .lead h1{font-size:clamp(34px,6.2vw,58px);line-height:1.02;font-weight:800;margin:0 0 20px;letter-spacing:-.5px}
   .lead h1 .ia{color:var(--violet);font-style:italic}
   .lead p.sub{font-size:clamp(16px,2.3vw,19px);line-height:1.5;color:#3a3646;margin:0 0 26px;max-width:30ch}
   .checks{display:flex;flex-wrap:wrap;gap:12px 22px;margin:0;padding:0;list-style:none}
   .checks li{display:flex;align-items:center;gap:9px;font-weight:600;font-size:15.5px}
-  .checks .ck{
-    width:22px;height:22px;border-radius:999px;flex:0 0 auto;
-    background:rgba(129,26,255,.12);color:var(--violet);
-    display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;
-  }
-  /* Form card */
-  .card{
-    background:#fff;border:1px solid var(--line);border-radius:22px;
-    box-shadow:0 24px 60px rgba(21,19,29,.10);
-    padding:12px 12px 6px;min-height:560px;
-  }
-  .card iframe{width:100%;border:none;display:block;min-height:560px;border-radius:16px;background:transparent}
-  /* Mobile */
+  .checks .ck{width:22px;height:22px;border-radius:999px;flex:0 0 auto;background:rgba(129,26,255,.12);color:var(--violet);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
+
+  /* Form card + loader overlay */
+  .card{position:relative;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 24px 60px rgba(21,19,29,.10);padding:22px 22px 18px;min-height:560px;overflow:hidden}
+  .card iframe{width:100%;border:none;display:block;min-height:520px;border-radius:12px;background:transparent;opacity:0;transition:opacity .35s ease}
+  .card.ready iframe{opacity:1}
+  /* Skeleton (branded, looks like the real form) shown instantly over the iframe */
+  .skel{position:absolute;inset:0;background:#fff;border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:16px;transition:opacity .35s ease}
+  .card.ready .skel{opacity:0;pointer-events:none}
+  .skel .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .skel .fld label{display:block;font-size:14px;font-weight:600;color:#2b2735;margin:0 0 7px}
+  .skel .fld .box{height:46px;border-radius:9px;border:1px solid #e4e0ec;background:var(--field);display:flex;align-items:center;padding:0 14px;color:#aba6b8;font-size:15px}
+  .skel .fld.full{grid-column:1 / -1}
+  .skel .cta{margin-top:4px;height:52px;border-radius:11px;background:linear-gradient(90deg,var(--violet),var(--violet-2));color:#fff;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;gap:10px}
+  .skel .hint{text-align:center;font-size:12.5px;color:#9a93a8;margin-top:2px}
+  .skel .dots{display:inline-flex;gap:4px;margin-left:4px}
+  .skel .dots i{width:5px;height:5px;border-radius:50%;background:#fff;opacity:.5;animation:bl 1s infinite}
+  .skel .dots i:nth-child(2){animation-delay:.15s}
+  .skel .dots i:nth-child(3){animation-delay:.3s}
+  @keyframes bl{0%,100%{opacity:.3}50%{opacity:1}}
+  /* subtle shimmer on the skeleton boxes */
+  .shimmer{position:relative;overflow:hidden}
+  .shimmer::after{content:"";position:absolute;inset:0;transform:translateX(-100%);background:linear-gradient(90deg,transparent,rgba(129,26,255,.07),transparent);animation:sh 1.3s infinite}
+  @keyframes sh{100%{transform:translateX(100%)}}
+
   @media (max-width:860px){
     .wrap{padding:12px 14px 40px}
     .bar{padding:12px 16px;border-radius:22px}
     .bar .tag{font-size:12.5px}
     .grid{grid-template-columns:1fr;gap:22px;margin-top:22px}
     .lead{order:1}
-    .card{order:2;min-height:620px;padding:8px}
-    .card iframe{min-height:620px}
+    .card{order:2;min-height:600px;padding:16px}
+    .card iframe{min-height:560px}
+    .skel{padding:16px}
     .lead p.sub{max-width:none}
   }
 </style>
@@ -104,47 +107,68 @@
         </ul>
       </section>
 
-      <section class="card">
+      <section class="card" id="card">
+        <!-- Skeleton branté affiché INSTANTANÉMENT (couvre le "Soumettre" GHL) -->
+        <div class="skel" id="skel" aria-hidden="true">
+          <div class="row">
+            <div class="fld"><label>Prénom</label><div class="box shimmer">Saisissez votre prénom</div></div>
+            <div class="fld"><label>Nom</label><div class="box shimmer">Saisissez votre nom</div></div>
+          </div>
+          <div class="row">
+            <div class="fld"><label>Téléphone *</label><div class="box shimmer">06 12 34 56 78</div></div>
+            <div class="fld"><label>Courriel *</label><div class="box shimmer">ton@email.com</div></div>
+          </div>
+          <div class="cta">Récupère la méthode IA Coach</div>
+          <div class="hint">On prépare ton accès<span class="dots"><i></i><i></i><i></i></span></div>
+        </div>
+
+        <!-- Vrai formulaire GHL (révélé quand prêt) -->
         <iframe
           src="https://api.leadconnectorhq.com/widget/form/L7MlsDFOg7sc7ko8As9s"
-          id="inline-L7MlsDFOg7sc7ko8As9s"
+          id="gform"
           data-form-id="L7MlsDFOg7sc7ko8As9s"
-          data-layout-iframe-id="inline-L7MlsDFOg7sc7ko8As9s"
-          data-height="560"
+          data-layout-iframe-id="gform"
           title="DDD Optin (Sam)"></iframe>
       </section>
     </main>
   </div>
 
-  <!-- GHL form embed: gère le redimensionnement + la redirection vers /ddd-lp -->
   <script src="https://link.msgsndr.com/js/form_embed.js"></script>
 
-  <!-- Meta Pixel + event Lead à la soumission -->
   <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window,document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
+    // ---- Meta Pixel + event Lead ----
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+    (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
     fbq('init','1622219315920128');
     fbq('track','PageView');
 
-    // Fire "Lead" une seule fois quand le form L7Ml confirme la soumission.
     (function(){
-      var fired=false;
-      function fireLead(){ if(fired)return; fired=true; try{ fbq('track','Lead'); }catch(e){} }
+      var card=document.getElementById('card');
+      var revealed=false, leadFired=false;
+      function reveal(){ if(revealed)return; revealed=true; card.classList.add('ready'); }
+      function fireLead(){ if(leadFired)return; leadFired=true; try{fbq('track','Lead');}catch(e){} }
+
+      // Révèle le vrai form dès qu'il a rendu (GHL envoie sa hauteur quand il est prêt),
+      // sinon filet de sécurité à 5s. Tant que pas révélé = squelette branté (zéro "Soumettre").
       window.addEventListener('message',function(ev){
-        try{
-          var o=ev.origin||'';
-          if(o.indexOf('leadconnectorhq')===-1 && o.indexOf('msgsndr')===-1) return;
-          var d=ev.data;
-          var s=typeof d==='string'?d:JSON.stringify(d||'');
-          if(/set-sticky-contacts|form[-_ ]?submit|formSubmit|onFormSubmit/i.test(s)) fireLead();
-        }catch(e){}
-      },false);
+        var o=ev.origin||'';
+        if(o.indexOf('leadconnectorhq')===-1 && o.indexOf('msgsndr')===-1) return;
+        var d=ev.data, s=(typeof d==='string')?d:JSON.stringify(d||'');
+        // Lead à la soumission
+        if(/set-sticky-contacts|form[-_ ]?submit|formSubmit|onFormSubmit/i.test(s)) fireLead();
+        // Hauteur du form rendu -> on révèle
+        var m=s.match(/\b(\d{3,4})\b/);
+        if(m){ var h=parseInt(m[1],10); if(h>=380 && h<=2200) reveal(); }
+      }, false);
+
+      // filet de sécurité
+      setTimeout(reveal, 5000);
+      // si l'iframe charge très vite, laisse un petit délai pour que les champs se peignent
+      var f=document.getElementById('gform');
+      if(f){ f.addEventListener('load', function(){ setTimeout(reveal, 2600); }); }
     })();
   </script>
 </body>
