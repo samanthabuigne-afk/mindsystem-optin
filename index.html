@@ -151,24 +151,26 @@
       function reveal(){ if(revealed)return; revealed=true; card.classList.add('ready'); }
       function fireLead(){ if(leadFired)return; leadFired=true; try{fbq('track','Lead');}catch(e){} }
 
-      // Révèle le vrai form dès qu'il a rendu (GHL envoie sa hauteur quand il est prêt),
-      // sinon filet de sécurité à 5s. Tant que pas révélé = squelette branté (zéro "Soumettre").
+      // IMPORTANT : GHL n'émet AUCUN signal "form rendu" (il envoie juste sa hauteur dès ~1,2s,
+      // alors que le "Soumettre" est encore affiché). Donc on NE révèle PAS sur message de hauteur
+      // (ça montrait le "Soumettre"). On garde le squelette branté jusqu'à ce que le vrai form soit
+      // sûrement peint (délai fixe, calé pour le mobile), puis bascule. Zéro "Soumettre" visible.
       window.addEventListener('message',function(ev){
         var o=ev.origin||'';
         if(o.indexOf('leadconnectorhq')===-1 && o.indexOf('msgsndr')===-1) return;
         var d=ev.data, s=(typeof d==='string')?d:JSON.stringify(d||'');
-        // Lead à la soumission
         if(/set-sticky-contacts|form[-_ ]?submit|formSubmit|onFormSubmit/i.test(s)) fireLead();
-        // Hauteur du form rendu -> on révèle
-        var m=s.match(/\b(\d{3,4})\b/);
-        if(m){ var h=parseInt(m[1],10); if(h>=380 && h<=2200) reveal(); }
       }, false);
 
-      // filet de sécurité
+      // Révélation temporisée : le squelette (identique au form) reste affiché pendant le
+      // chargement GHL, puis on montre le vrai form une fois rendu.
       setTimeout(reveal, 5000);
-      // si l'iframe charge très vite, laisse un petit délai pour que les champs se peignent
-      var f=document.getElementById('gform');
-      if(f){ f.addEventListener('load', function(){ setTimeout(reveal, 2600); }); }
+
+      // Échappatoire : si quelqu'un tape/clique sur la zone après 3,5s (form très probablement prêt),
+      // on révèle tout de suite pour ne pas le faire attendre.
+      var card=document.getElementById('card'), armed=false;
+      setTimeout(function(){ armed=true; }, 3500);
+      card.addEventListener('pointerdown', function(){ if(armed) reveal(); }, {once:false});
     })();
   </script>
 </body>
