@@ -5,34 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Mind System — Le système IA qui scale ton business</title>
 <meta name="robots" content="noindex">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <link rel="preconnect" href="https://api.leadconnectorhq.com">
 <link rel="preconnect" href="https://link.msgsndr.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --violet:#811AFF; --violet-2:#A352FF; --ink:#15131d; --muted:#5b5668;
-    --line:#ece9f1; --field:#f4f2f8;
-  }
+  :root{--violet:#811AFF;--violet-2:#A352FF;--ink:#15131d;--muted:#5b5668;--line:#ece9f1;--field:#f4f2f8}
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
-  body{
-    font-family:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
-    color:var(--ink);
-    background:
-      radial-gradient(1100px 520px at 72% 8%, rgba(129,26,255,.16), rgba(129,26,255,0) 60%),
-      radial-gradient(900px 480px at 10% 0%, rgba(163,82,255,.10), rgba(163,82,255,0) 55%),
-      #ffffff;
-    -webkit-font-smoothing:antialiased;
-    min-height:100vh;
-  }
-  .wrap{max-width:1140px;margin:0 auto;padding:16px 18px 56px}
-  .bar{
-    display:flex;align-items:center;justify-content:space-between;gap:16px;
-    background:var(--ink);color:#fff;border-radius:999px;
-    padding:14px 24px;box-shadow:0 10px 30px rgba(21,19,29,.18);
-  }
+  body{font-family:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:var(--ink);
+    background:radial-gradient(1100px 520px at 72% 6%,rgba(129,26,255,.16),rgba(129,26,255,0) 60%),radial-gradient(900px 480px at 8% 0%,rgba(163,82,255,.10),rgba(163,82,255,0) 55%),#fff;
+    -webkit-font-smoothing:antialiased;min-height:100vh}
+  .wrap{max-width:1140px;margin:0 auto;padding:16px 18px 64px}
+  .bar{display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--ink);color:#fff;border-radius:999px;padding:14px 24px;box-shadow:0 10px 30px rgba(21,19,29,.18)}
   .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;letter-spacing:.2px}
   .brand .logo{width:30px;height:30px;border-radius:8px;flex:0 0 auto;background:#fff;display:flex;align-items:center;justify-content:center}
   .brand .logo svg{width:18px;height:18px}
@@ -45,39 +32,50 @@
   .checks li{display:flex;align-items:center;gap:9px;font-weight:600;font-size:15.5px}
   .checks .ck{width:22px;height:22px;border-radius:999px;flex:0 0 auto;background:rgba(129,26,255,.12);color:var(--violet);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
 
-  /* Form card + loader overlay */
+  /* Form card + skeleton anti-"Soumettre" */
   .card{position:relative;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 24px 60px rgba(21,19,29,.10);padding:22px 22px 18px;min-height:560px;overflow:hidden}
   .card iframe{width:100%;border:none;display:block;min-height:520px;border-radius:12px;background:transparent;opacity:0;transition:opacity .35s ease}
   .card.ready iframe{opacity:1}
-  /* Skeleton (branded, looks like the real form) shown instantly over the iframe */
   .skel{position:absolute;inset:0;background:#fff;border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:16px;transition:opacity .35s ease}
   .card.ready .skel{opacity:0;pointer-events:none}
   .skel .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   .skel .fld label{display:block;font-size:14px;font-weight:600;color:#2b2735;margin:0 0 7px}
   .skel .fld .box{height:46px;border-radius:9px;border:1px solid #e4e0ec;background:var(--field);display:flex;align-items:center;padding:0 14px;color:#aba6b8;font-size:15px}
-  .skel .fld.full{grid-column:1 / -1}
-  .skel .cta{margin-top:4px;height:52px;border-radius:11px;background:linear-gradient(90deg,var(--violet),var(--violet-2));color:#fff;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;gap:10px}
+  .skel .cta{margin-top:4px;height:52px;border-radius:11px;background:linear-gradient(90deg,var(--violet),var(--violet-2));color:#fff;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center}
   .skel .hint{text-align:center;font-size:12.5px;color:#9a93a8;margin-top:2px}
-  .skel .dots{display:inline-flex;gap:4px;margin-left:4px}
-  .skel .dots i{width:5px;height:5px;border-radius:50%;background:#fff;opacity:.5;animation:bl 1s infinite}
-  .skel .dots i:nth-child(2){animation-delay:.15s}
-  .skel .dots i:nth-child(3){animation-delay:.3s}
-  @keyframes bl{0%,100%{opacity:.3}50%{opacity:1}}
-  /* subtle shimmer on the skeleton boxes */
+  .skel .dots{display:inline-flex;gap:4px;margin-left:5px}
+  .skel .dots i{width:5px;height:5px;border-radius:50%;background:var(--violet);opacity:.4;animation:bl 1s infinite}
+  .skel .dots i:nth-child(2){animation-delay:.15s}.skel .dots i:nth-child(3){animation-delay:.3s}
+  @keyframes bl{0%,100%{opacity:.25}50%{opacity:1}}
   .shimmer{position:relative;overflow:hidden}
   .shimmer::after{content:"";position:absolute;inset:0;transform:translateX(-100%);background:linear-gradient(90deg,transparent,rgba(129,26,255,.07),transparent);animation:sh 1.3s infinite}
   @keyframes sh{100%{transform:translateX(100%)}}
 
+  /* Cartes preuve */
+  .proof{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:52px}
+  .pcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px 20px;box-shadow:0 14px 40px rgba(21,19,29,.06)}
+  .pcard .who{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.6px;color:var(--violet);background:rgba(129,26,255,.10);border-radius:999px;padding:5px 12px;margin-bottom:14px}
+  .pcard h3{font-size:19px;line-height:1.25;font-weight:800;margin:0 0 8px}
+  .pcard p{font-size:15px;line-height:1.5;color:var(--muted);margin:0}
+
+  /* Section sombre */
+  .foryou{margin-top:28px;background:var(--ink);color:#fff;border-radius:22px;padding:40px 36px}
+  .foryou h2{font-size:clamp(24px,3.6vw,34px);font-weight:800;margin:0 0 6px}
+  .foryou .lede{color:var(--violet-2);font-weight:700;font-size:17px;margin:0 0 22px}
+  .foryou ul{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+  .foryou li{display:flex;align-items:flex-start;gap:12px;font-size:16.5px;line-height:1.45;color:#eceaf2}
+  .foryou li .ck{width:24px;height:24px;border-radius:999px;flex:0 0 auto;background:rgba(163,82,255,.22);color:#c79bff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;margin-top:1px}
+
   @media (max-width:860px){
-    .wrap{padding:12px 14px 40px}
+    .wrap{padding:12px 14px 44px}
     .bar{padding:12px 16px;border-radius:22px}
     .bar .tag{font-size:12.5px}
     .grid{grid-template-columns:1fr;gap:22px;margin-top:22px}
-    .lead{order:1}
-    .card{order:2;min-height:600px;padding:16px}
-    .card iframe{min-height:560px}
-    .skel{padding:16px}
+    .lead{order:1}.card{order:2;min-height:600px;padding:16px}
+    .card iframe{min-height:560px}.skel{padding:16px}
     .lead p.sub{max-width:none}
+    .proof{grid-template-columns:1fr;gap:14px;margin-top:34px}
+    .foryou{padding:30px 22px}
   }
 </style>
 </head>
@@ -85,12 +83,7 @@
   <div class="wrap">
     <header class="bar">
       <div class="brand">
-        <span class="logo">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M3 19V5l6 7 6-7v14" stroke="#15131d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M18 19V9l3 3" stroke="#811AFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
+        <span class="logo"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 19V5l6 7 6-7v14" stroke="#15131d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 19V9l3 3" stroke="#811AFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         Mind System
       </div>
       <div class="tag">Le système IA qui scale ton business</div>
@@ -108,7 +101,6 @@
       </section>
 
       <section class="card" id="card">
-        <!-- Skeleton branté affiché INSTANTANÉMENT (couvre le "Soumettre" GHL) -->
         <div class="skel" id="skel" aria-hidden="true">
           <div class="row">
             <div class="fld"><label>Prénom</label><div class="box shimmer">Saisissez votre prénom</div></div>
@@ -121,56 +113,52 @@
           <div class="cta">Récupère la méthode IA Coach</div>
           <div class="hint">On prépare ton accès<span class="dots"><i></i><i></i><i></i></span></div>
         </div>
-
-        <!-- Vrai formulaire GHL (révélé quand prêt) -->
-        <iframe
-          src="https://api.leadconnectorhq.com/widget/form/L7MlsDFOg7sc7ko8As9s"
-          id="gform"
-          data-form-id="L7MlsDFOg7sc7ko8As9s"
-          data-layout-iframe-id="gform"
-          title="DDD Optin (Sam)"></iframe>
+        <iframe src="https://api.leadconnectorhq.com/widget/form/L7MlsDFOg7sc7ko8As9s" id="gform" data-form-id="L7MlsDFOg7sc7ko8As9s" data-layout-iframe-id="gform" title="DDD Optin (Sam)"></iframe>
       </section>
     </main>
+
+    <!-- Tes 3 cartes preuve -->
+    <section class="proof">
+      <div class="pcard"><span class="who">YOMI</span><h3>Des millions d'euros générés</h3><p>Un moteur de CA à grande échelle.</p></div>
+      <div class="pcard"><span class="who">DIET DE DINGUE</span><h3>Une nouvelle ligne de chiffre d'affaires</h3><p>Du récurrent sur des clients déjà signés.</p></div>
+      <div class="pcard"><span class="who">LE CHARBON</span><h3>Un accompagnement premium</h3><p>Les membres progressent et vont au bout de leurs objectifs.</p></div>
+    </section>
+
+    <!-- Section sombre -->
+    <section class="foryou">
+      <h2>C'est fait pour toi si…</h2>
+      <p class="lede">Pas « une IA ». Ton moteur de CA.</p>
+      <ul>
+        <li><span class="ck">✓</span> Tu veux scaler sans devenir le goulot d'étranglement de ta boîte.</li>
+        <li><span class="ck">✓</span> Tu veux ouvrir une nouvelle ligne de CA récurrent sur tes clients déjà signés.</li>
+        <li><span class="ck">✓</span> Tu veux systématiser ton accompagnement, comme les plus gros l'ont fait.</li>
+      </ul>
+    </section>
   </div>
 
   <script src="https://link.msgsndr.com/js/form_embed.js"></script>
-
   <script>
-    // ---- Meta Pixel + event Lead ----
     !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
     n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
     t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
     (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init','1622219315920128');
-    fbq('track','PageView');
+    fbq('init','1622219315920128');fbq('track','PageView');
 
     (function(){
-      var card=document.getElementById('card');
-      var revealed=false, leadFired=false;
+      var card=document.getElementById('card'), revealed=false, leadFired=false;
       function reveal(){ if(revealed)return; revealed=true; card.classList.add('ready'); }
       function fireLead(){ if(leadFired)return; leadFired=true; try{fbq('track','Lead');}catch(e){} }
-
-      // IMPORTANT : GHL n'émet AUCUN signal "form rendu" (il envoie juste sa hauteur dès ~1,2s,
-      // alors que le "Soumettre" est encore affiché). Donc on NE révèle PAS sur message de hauteur
-      // (ça montrait le "Soumettre"). On garde le squelette branté jusqu'à ce que le vrai form soit
-      // sûrement peint (délai fixe, calé pour le mobile), puis bascule. Zéro "Soumettre" visible.
+      // Pas de révélation sur message de hauteur (GHL l'envoie en montrant encore "Soumettre").
       window.addEventListener('message',function(ev){
-        var o=ev.origin||'';
-        if(o.indexOf('leadconnectorhq')===-1 && o.indexOf('msgsndr')===-1) return;
+        var o=ev.origin||''; if(o.indexOf('leadconnectorhq')===-1&&o.indexOf('msgsndr')===-1) return;
         var d=ev.data, s=(typeof d==='string')?d:JSON.stringify(d||'');
         if(/set-sticky-contacts|form[-_ ]?submit|formSubmit|onFormSubmit/i.test(s)) fireLead();
       }, false);
-
-      // Révélation temporisée : le squelette (identique au form) reste affiché pendant le
-      // chargement GHL, puis on montre le vrai form une fois rendu.
+      // Squelette branté jusqu'à ce que le vrai form soit rendu, puis bascule. Zéro "Soumettre".
       setTimeout(reveal, 5000);
-
-      // Échappatoire : si quelqu'un tape/clique sur la zone après 3,5s (form très probablement prêt),
-      // on révèle tout de suite pour ne pas le faire attendre.
-      var card=document.getElementById('card'), armed=false;
-      setTimeout(function(){ armed=true; }, 3500);
-      card.addEventListener('pointerdown', function(){ if(armed) reveal(); }, {once:false});
+      var armed=false; setTimeout(function(){armed=true;},3500);
+      card.addEventListener('pointerdown',function(){ if(armed) reveal(); });
     })();
   </script>
 </body>
