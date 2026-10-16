@@ -8,8 +8,8 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <link rel="preconnect" href="https://api.leadconnectorhq.com">
 <link rel="preconnect" href="https://link.msgsndr.com">
+<link rel="preconnect" href="https://assets.cdn.filesafe.space">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{--violet:#811AFF;--violet-2:#A352FF;--ink:#15131d;--muted:#5b5668;--line:#ece9f1;--field:#f4f2f8}
@@ -18,23 +18,24 @@
   body{font-family:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:var(--ink);
     background:radial-gradient(1100px 520px at 72% 6%,rgba(129,26,255,.16),rgba(129,26,255,0) 60%),radial-gradient(900px 480px at 8% 0%,rgba(163,82,255,.10),rgba(163,82,255,0) 55%),#fff;
     -webkit-font-smoothing:antialiased;min-height:100vh}
-  .wrap{max-width:1140px;margin:0 auto;padding:16px 18px 64px}
-  .bar{display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--ink);color:#fff;border-radius:999px;padding:14px 24px;box-shadow:0 10px 30px rgba(21,19,29,.18)}
-  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;letter-spacing:.2px}
-  .brand .logo{width:30px;height:30px;border-radius:8px;flex:0 0 auto;background:#fff;display:flex;align-items:center;justify-content:center}
-  .brand .logo svg{width:18px;height:18px}
+  .wrap{max-width:1180px;margin:0 auto;padding:16px 20px 64px}
+  /* dark bar */
+  .bar{display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--ink);color:#fff;border-radius:999px;padding:13px 26px;box-shadow:0 10px 30px rgba(21,19,29,.18)}
+  .bar .brand{display:flex;align-items:center;gap:11px}
+  .bar .pill{background:#fff;border-radius:999px;display:flex;align-items:center;gap:9px;padding:8px 16px 8px 12px}
+  .bar .pill img{height:24px;width:24px;display:block}
+  .bar .pill b{font-weight:800;font-size:18px;color:var(--ink);letter-spacing:.2px}
   .bar .tag{font-weight:600;font-size:14.5px;color:#d8d4e4;text-align:right}
-  .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;margin-top:34px}
-  .lead h1{font-size:clamp(34px,6.2vw,58px);line-height:1.02;font-weight:800;margin:0 0 20px;letter-spacing:-.5px}
+  /* hero + form */
+  .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:start;margin-top:40px}
+  .lead h1{font-size:clamp(34px,6vw,60px);line-height:1.02;font-weight:800;margin:10px 0 22px;letter-spacing:-.5px}
   .lead h1 .ia{color:var(--violet);font-style:italic}
-  .lead p.sub{font-size:clamp(16px,2.3vw,19px);line-height:1.5;color:#3a3646;margin:0 0 26px;max-width:30ch}
+  .lead p.sub{font-size:clamp(16px,2.3vw,19px);line-height:1.5;color:#3a3646;margin:0 0 26px;max-width:32ch}
   .checks{display:flex;flex-wrap:wrap;gap:12px 22px;margin:0;padding:0;list-style:none}
   .checks li{display:flex;align-items:center;gap:9px;font-weight:600;font-size:15.5px}
   .checks .ck{width:22px;height:22px;border-radius:999px;flex:0 0 auto;background:rgba(129,26,255,.12);color:var(--violet);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
-
-  /* Form card + skeleton anti-"Soumettre" */
-  .card{position:relative;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 24px 60px rgba(21,19,29,.10);padding:22px 22px 18px;min-height:560px;overflow:hidden}
-  .card iframe{width:100%;border:none;display:block;min-height:520px;border-radius:12px;background:transparent;opacity:0;transition:opacity .35s ease}
+  .card{position:relative;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 24px 60px rgba(21,19,29,.10);padding:22px;min-height:540px;overflow:hidden}
+  .card iframe{width:100%;border:none;display:block;min-height:500px;border-radius:12px;background:transparent;opacity:0;transition:opacity .35s ease}
   .card.ready iframe{opacity:1}
   .skel{position:absolute;inset:0;background:#fff;border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:16px;transition:opacity .35s ease}
   .card.ready .skel{opacity:0;pointer-events:none}
@@ -43,39 +44,32 @@
   .skel .fld .box{height:46px;border-radius:9px;border:1px solid #e4e0ec;background:var(--field);display:flex;align-items:center;padding:0 14px;color:#aba6b8;font-size:15px}
   .skel .cta{margin-top:4px;height:52px;border-radius:11px;background:linear-gradient(90deg,var(--violet),var(--violet-2));color:#fff;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center}
   .skel .hint{text-align:center;font-size:12.5px;color:#9a93a8;margin-top:2px}
-  .skel .dots{display:inline-flex;gap:4px;margin-left:5px}
-  .skel .dots i{width:5px;height:5px;border-radius:50%;background:var(--violet);opacity:.4;animation:bl 1s infinite}
-  .skel .dots i:nth-child(2){animation-delay:.15s}.skel .dots i:nth-child(3){animation-delay:.3s}
-  @keyframes bl{0%,100%{opacity:.25}50%{opacity:1}}
   .shimmer{position:relative;overflow:hidden}
   .shimmer::after{content:"";position:absolute;inset:0;transform:translateX(-100%);background:linear-gradient(90deg,transparent,rgba(129,26,255,.07),transparent);animation:sh 1.3s infinite}
   @keyframes sh{100%{transform:translateX(100%)}}
-
-  /* Cartes preuve */
-  .proof{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:52px}
-  .pcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px 20px;box-shadow:0 14px 40px rgba(21,19,29,.06)}
-  .pcard .who{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.6px;color:var(--violet);background:rgba(129,26,255,.10);border-radius:999px;padding:5px 12px;margin-bottom:14px}
-  .pcard h3{font-size:19px;line-height:1.25;font-weight:800;margin:0 0 8px}
-  .pcard p{font-size:15px;line-height:1.5;color:var(--muted);margin:0}
-
-  /* Section sombre */
-  .foryou{margin-top:28px;background:var(--ink);color:#fff;border-radius:22px;padding:40px 36px}
-  .foryou h2{font-size:clamp(24px,3.6vw,34px);font-weight:800;margin:0 0 6px}
-  .foryou .lede{color:var(--violet-2);font-weight:700;font-size:17px;margin:0 0 22px}
-  .foryou ul{list-style:none;margin:0;padding:0;display:grid;gap:14px}
-  .foryou li{display:flex;align-items:flex-start;gap:12px;font-size:16.5px;line-height:1.45;color:#eceaf2}
-  .foryou li .ck{width:24px;height:24px;border-radius:999px;flex:0 0 auto;background:rgba(163,82,255,.22);color:#c79bff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;margin-top:1px}
-
-  @media (max-width:860px){
+  /* logos band */
+  .trust{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:20px 40px;margin-top:40px}
+  .trust .lab{font-size:12.5px;font-weight:800;letter-spacing:1.5px;color:#9a93a8;text-transform:uppercase;margin-right:6px}
+  .trust img{height:34px;width:auto;object-fit:contain}
+  /* cards with photo zone */
+  .proof{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px}
+  .pcard{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 18px 50px rgba(21,19,29,.08)}
+  .pcard .photo{height:190px;background:linear-gradient(135deg,#efe7ff,#c9b3ff);display:flex;align-items:center;justify-content:center;color:#7a56c9;font-weight:700;font-size:13px;letter-spacing:.3px}
+  .pcard:nth-child(2) .photo{background:linear-gradient(135deg,#eafff2,#bfe9cf);color:#2f8f5b}
+  .pcard:nth-child(3) .photo{background:linear-gradient(135deg,#ffe3e3,#ff9d9d);color:#c53b3b}
+  .pcard .photo img{width:100%;height:100%;object-fit:cover;display:block}
+  .pcard .body{padding:20px}
+  .pcard .who{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.5px;color:var(--violet);background:rgba(129,26,255,.1);border-radius:999px;padding:5px 11px;margin-bottom:12px}
+  .pcard h4{font-weight:800;font-size:18px;line-height:1.25;color:var(--ink);margin:0 0 7px}
+  .pcard p{font-size:14px;line-height:1.45;color:var(--muted);margin:0}
+  @media (max-width:880px){
     .wrap{padding:12px 14px 44px}
-    .bar{padding:12px 16px;border-radius:22px}
-    .bar .tag{font-size:12.5px}
-    .grid{grid-template-columns:1fr;gap:22px;margin-top:22px}
-    .lead{order:1}.card{order:2;min-height:600px;padding:16px}
-    .card iframe{min-height:560px}.skel{padding:16px}
+    .bar{padding:11px 16px;border-radius:22px}.bar .tag{font-size:12px}.bar .pill b{font-size:16px}
+    .grid{grid-template-columns:1fr;gap:24px;margin-top:22px}
+    .lead{order:1}.card{order:2;min-height:580px;padding:16px}.card iframe{min-height:540px}.skel{padding:16px}
     .lead p.sub{max-width:none}
-    .proof{grid-template-columns:1fr;gap:14px;margin-top:34px}
-    .foryou{padding:30px 22px}
+    .trust{gap:16px 24px;margin-top:32px}.trust img{height:26px}
+    .proof{grid-template-columns:1fr;gap:16px}
   }
 </style>
 </head>
@@ -83,8 +77,7 @@
   <div class="wrap">
     <header class="bar">
       <div class="brand">
-        <span class="logo"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 19V5l6 7 6-7v14" stroke="#15131d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 19V9l3 3" stroke="#811AFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        Mind System
+        <span class="pill"><img src="https://assets.cdn.filesafe.space/Lbx2jtywfyTgRXGsWGpK/media/6a8d6600cdd4b797a3b2e7c5.svg" alt="Mind System"><b>Mind System</b></span>
       </div>
       <div class="tag">Le système IA qui scale ton business</div>
     </header>
@@ -111,28 +104,36 @@
             <div class="fld"><label>Courriel *</label><div class="box shimmer">ton@email.com</div></div>
           </div>
           <div class="cta">Récupère la méthode IA Coach</div>
-          <div class="hint">On prépare ton accès<span class="dots"><i></i><i></i><i></i></span></div>
+          <div class="hint">On prépare ton accès…</div>
         </div>
         <iframe src="https://api.leadconnectorhq.com/widget/form/L7MlsDFOg7sc7ko8As9s" id="gform" data-form-id="L7MlsDFOg7sc7ko8As9s" data-layout-iframe-id="gform" title="DDD Optin (Sam)"></iframe>
       </section>
     </main>
 
-    <!-- Tes 3 cartes preuve -->
-    <section class="proof">
-      <div class="pcard"><span class="who">YOMI</span><h3>Des millions d'euros générés</h3><p>Un moteur de CA à grande échelle.</p></div>
-      <div class="pcard"><span class="who">DIET DE DINGUE</span><h3>Une nouvelle ligne de chiffre d'affaires</h3><p>Du récurrent sur des clients déjà signés.</p></div>
-      <div class="pcard"><span class="who">LE CHARBON</span><h3>Un accompagnement premium</h3><p>Les membres progressent et vont au bout de leurs objectifs.</p></div>
+    <!-- bande logos -->
+    <section class="trust">
+      <span class="lab">Ils nous font confiance</span>
+      <img src="https://assets.cdn.filesafe.space/Lbx2jtywfyTgRXGsWGpK/media/6a8d65a967ecc8731de1de79.webp" alt="Mindeo">
+      <img src="https://assets.cdn.filesafe.space/Lbx2jtywfyTgRXGsWGpK/media/6a8d65a9ad59e6cfeda2163a.jpeg" alt="Nicole">
+      <img src="https://assets.cdn.filesafe.space/Lbx2jtywfyTgRXGsWGpK/media/6a8d65a9cdd4b797a3b25c46.png" alt="Diète de Dingue">
+      <img src="https://assets.cdn.filesafe.space/Lbx2jtywfyTgRXGsWGpK/media/6a8d65a9e25296bd1b81a122.jpeg" alt="ADF Coaching">
+      <img src="https://assets.cdn.filesafe.space/Lbx2jtywfyTgRXGsWGpK/media/6a8d65a9e25296bd1b81a11d.svg" alt="Charbon">
     </section>
 
-    <!-- Section sombre -->
-    <section class="foryou">
-      <h2>C'est fait pour toi si…</h2>
-      <p class="lede">Pas « une IA ». Ton moteur de CA.</p>
-      <ul>
-        <li><span class="ck">✓</span> Tu veux scaler sans devenir le goulot d'étranglement de ta boîte.</li>
-        <li><span class="ck">✓</span> Tu veux ouvrir une nouvelle ligne de CA récurrent sur tes clients déjà signés.</li>
-        <li><span class="ck">✓</span> Tu veux systématiser ton accompagnement, comme les plus gros l'ont fait.</li>
-      </ul>
+    <!-- 3 cartes (zone photo prête à recevoir tes images : mets l'URL dans les <img> data-photo) -->
+    <section class="proof">
+      <div class="pcard">
+        <div class="photo"><!-- <img src="PHOTO_1"> --></div>
+        <div class="body"><span class="who">YOMI</span><h4>Des millions d'euros générés</h4><p>Un moteur de CA à grande échelle.</p></div>
+      </div>
+      <div class="pcard">
+        <div class="photo"><!-- <img src="PHOTO_2"> --></div>
+        <div class="body"><span class="who">DIET DE DINGUE</span><h4>Une nouvelle ligne de chiffre d'affaires</h4><p>Du récurrent sur des clients déjà signés.</p></div>
+      </div>
+      <div class="pcard">
+        <div class="photo"><!-- <img src="PHOTO_3"> --></div>
+        <div class="body"><span class="who">LE CHARBON</span><h4>Un accompagnement premium</h4><p>Les membres progressent et vont au bout de leurs objectifs.</p></div>
+      </div>
     </section>
   </div>
 
@@ -144,21 +145,18 @@
     t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
     (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
     fbq('init','1622219315920128');fbq('track','PageView');
-
     (function(){
-      var card=document.getElementById('card'), revealed=false, leadFired=false;
-      function reveal(){ if(revealed)return; revealed=true; card.classList.add('ready'); }
-      function fireLead(){ if(leadFired)return; leadFired=true; try{fbq('track','Lead');}catch(e){} }
-      // Pas de révélation sur message de hauteur (GHL l'envoie en montrant encore "Soumettre").
+      var card=document.getElementById('card'),revealed=false,leadFired=false;
+      function reveal(){if(revealed)return;revealed=true;card.classList.add('ready');}
+      function fireLead(){if(leadFired)return;leadFired=true;try{fbq('track','Lead');}catch(e){}}
       window.addEventListener('message',function(ev){
-        var o=ev.origin||''; if(o.indexOf('leadconnectorhq')===-1&&o.indexOf('msgsndr')===-1) return;
-        var d=ev.data, s=(typeof d==='string')?d:JSON.stringify(d||'');
-        if(/set-sticky-contacts|form[-_ ]?submit|formSubmit|onFormSubmit/i.test(s)) fireLead();
-      }, false);
-      // Squelette branté jusqu'à ce que le vrai form soit rendu, puis bascule. Zéro "Soumettre".
-      setTimeout(reveal, 5000);
-      var armed=false; setTimeout(function(){armed=true;},3500);
-      card.addEventListener('pointerdown',function(){ if(armed) reveal(); });
+        var o=ev.origin||'';if(o.indexOf('leadconnectorhq')===-1&&o.indexOf('msgsndr')===-1)return;
+        var d=ev.data,s=(typeof d==='string')?d:JSON.stringify(d||'');
+        if(/set-sticky-contacts|form[-_ ]?submit|formSubmit|onFormSubmit/i.test(s))fireLead();
+      },false);
+      setTimeout(reveal,5000);
+      var armed=false;setTimeout(function(){armed=true;},3500);
+      card.addEventListener('pointerdown',function(){if(armed)reveal();});
     })();
   </script>
 </body>
